@@ -35,7 +35,7 @@ Copy the file munin-plugin-wisepay to /etc/munin/plugins/wisepay and
 add these two lines to /etc/munin/plugin-conf.d/munin-node :
 
 <code>
-[wisepay]
+[wisepay]<br />
         user            munin
 <code>
 
