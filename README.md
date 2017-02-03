@@ -19,9 +19,10 @@ file.
 
 Put your usename and password into the config.sh file
 
+
 ##Usage
 
-Simply call the script and it prints the value
+Simply call the get_balance.sh script and it prints the value
 
 
 ##Using with munin-node
@@ -36,7 +37,7 @@ add these two lines to /etc/munin/plugin-conf.d/munin-node :
 <code>
 [wisepay]
         user            munin
-i<code>
+<code>
 
 
 ##Bugs
