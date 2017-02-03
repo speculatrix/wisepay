@@ -36,6 +36,7 @@ add these two lines to /etc/munin/plugin-conf.d/munin-node :
 
 <code>
 [wisepay]<br/>
+
         user            munin
 </code>
 
