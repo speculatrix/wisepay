@@ -2,7 +2,7 @@
 
 . ./config.sh
 
-DBGLVL=1
+DBGLVL=0
 FETCH=0
 CURLOPTS="--silent"
 
