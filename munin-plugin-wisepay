@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# copy this to /etc/munin/plugins/wisepay
+#
+# and add these two lines to /etc/munin/plugin-conf.d/munin-node
+# without the commenting-out
+#[wisepay]
+#        user            munin
+
+
+#set -x
+#id -a
+HOME=/var/lib/munin
+
+PATH=/sbin:/usr/sbin:/usr/local/sbin:/root/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games
+export PATH
+
+hostname="$(hostname)"
+
+if [ "$1" = "config" ]; then
+        #echo "host_name $hostname"
+	echo 'graph_title Wisepay Balance'
+	echo 'graph_info This graph shows the current balance in wisepay'
+	echo 'graph_vlabel Pounds'
+	#echo 'graph_category finance'
+        echo 'balance.label pounds'
+	echo 'balance.warning -10:4'
+	exit 0
+fi
+
+# this file caches the current balance
+BALANCEFILE=/var/run/munin/wisepay-balance.txt
+BALANCEAGE=0
+
+# determine the age of the cached balance in minutes
+if [ -f "$BALANCEFILE" ] ; then
+	NOWSECS=`date +%s`
+	BALANCEDATE=`stat --printf=%Y $BALANCEFILE`
+	BALANCEAGE=$(( ( $NOWSECS - $BALANCEDATE ) / 60 ))
+fi
+
+
+# get the current day and hour of day
+NOWDAY=`date +%w`
+NOWHOUR=`date +%H`
+
+# only get a fresh balance Monday to Friday, 8am to 5pm, at most every hour
+if [ $NOWDAY -ge 1 -a $NOWDAY -le 5 -a $NOWHOUR -ge 8 -a $NOWHOUR -le 17 -a "$BALANCEAGE" -ge 60 ] ; then
+	rm "$BALANCEFILE"
+fi
+
+
+if [ ! -f "$BALANCEFILE" ] ; then
+	cd ~/wisepay
+	./get_balance.sh > "$BALANCEFILE"
+fi
+
+
+if [ -s "$BALANCEFILE" ] ; then
+	echo -n "balance.value "
+	cat "$BALANCEFILE"
+	echo ""
+fi
+
+
+
