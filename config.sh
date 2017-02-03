@@ -1,7 +1,7 @@
 # config.sh
 # configuration file for wisepay
 
-USER="Wisepay.Username
+USER="Wisepay.Username"
 PASS="wisepaypass"
 MID=1234
 ROOTDIR=$HOME/.wisepay
