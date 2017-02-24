@@ -10,9 +10,10 @@
 
 #set -x
 #id -a
-HOME=/var/lib/munin
+HOME=~munin
+export HOME
 
-PATH=/sbin:/usr/sbin:/usr/local/sbin:/root/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games
+PATH=/sbin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
 export PATH
 
 hostname="$(hostname)"
@@ -51,7 +52,7 @@ fi
 
 
 if [ ! -f "$BALANCEFILE" ] ; then
-	cd ~/wisepay
+	cd ~munin/wisepay
 	./get_balance.sh > "$BALANCEFILE"
 fi
 
